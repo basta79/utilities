@@ -1,0 +1,27 @@
+private static readonly string[] SystemLists = new string[] { "/FormServerTemplates", "/PublishingImages", "/Pages", "/SiteAssets"
+                    , "/SiteCollectionDocuments","/SiteCollectionImages","/SitePages","/Style Library","/WorkflowTasks"
+                    ,"/Cache Profiles","/ContentTypeSyncLog","/RoutingRules","/IWConvertedForms","/HoldReports","/ContentTypeAppLog"
+                    ,"/Holds","/Long Running Operation Status","/masterpage","/Notification Pages","/Quick Deploy Items"
+                    ,"/Relationships List","/Reporting Metadata","/Reporting Templates","/PackageList","/solutions"
+                    ,"/Submitted E-mail Records","/PublishedLinks","/TaxonomyHiddenList","/theme","/wp","/PublishedFeed"};
+                    
+        public static bool IsSystemList(IAveList list)
+        {
+            bool isSystemList = false;
+            if (list.Hidden)
+            {
+                isSystemList = true;
+            }
+            else
+            {
+                foreach (string systemList in SystemLists)
+                {
+                    if (list.RootFolder.ServerRelativeUrl.EndsWith(systemList, StringComparison.OrdinalIgnoreCase))
+                    {
+                        isSystemList = true;
+                        break;
+                    }
+                }
+            }
+            return isSystemList;
+        }       
