@@ -1,0 +1,17 @@
+        public static bool IsTenantMySite(string siteUrl)
+        {
+            if (Regex.IsMatch(siteUrl, @"^(https://)[^/]+/personal/.", RegexOptions.IgnoreCase))   //有些客户的onedrive url比较特殊,domain host中并不是以—my结尾的 SAAS-25851
+            {
+                return true;
+            }
+            Uri siteUri = new Uri(siteUrl);
+            if (siteUri.Host.IndexOf('.') > 0)
+            {
+                string domainPrefix = siteUri.Host.Substring(0, siteUri.Host.IndexOf('.'));
+                return domainPrefix.EndsWith("-my", StringComparison.OrdinalIgnoreCase);
+            }
+            else
+            {
+                return false;
+            }
+        }
